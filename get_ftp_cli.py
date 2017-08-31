@@ -12,7 +12,7 @@ def main():
   p = optparse.OptionParser(
     description='Parses MS Azure PublishSettings file and eturns properly formatted CLI for use with Unix ftp command',
     prog='get_ftp_cli',
-    version='%prog 1.0.0',
+    version='%prog 1.0.1',
     usage='%prog [path/to/*.PublishSettings]')
 
   options, arguments = p.parse_args()
@@ -33,10 +33,15 @@ def main():
     ftp_username = ftp_profile['username'].replace("\\$", "%5C%24")
     ftp_password = ftp_profile['userpwd']
 
+    print("")
     print('Execute the following command to connect to the Azure FTP:')
-    print("==========================================================")
+    print("")
     print('ftp ftp://{}:{}@{}'.format(ftp_username, ftp_password, ftp_host))
-    print("==========================================================")
+    print("")
+    print('Execute the following command to put the contents of a directory to the Azure website:')
+    print("")
+    print('wput $HOME/Sites/[appdir]/* ftp://{}:{}@{}/'.format(ftp_username, ftp_password, ftp_profile['publishurl']))
+    print("")
   else:
     p.print_help()
 
